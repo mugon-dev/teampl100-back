@@ -7,3 +7,4 @@
 * Spring Web
 * Spring Boot DevTools
 * Swagger
+* junit5
