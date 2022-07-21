@@ -12,17 +12,23 @@ class StudentServiceImpl @Autowired constructor(
     private val studentRepository: StudentRepository
 ) : StudentService {
     override fun create(request: StudentRequest): StudentEntity? {
-
-        return studentRepository.createStudent(request.toEntity())
+        val newStudent = StudentEntity(
+            id = request.id ?: throw Exception("id 입력해 주세요"),
+            grade = request.grade ?: throw Exception("grade 입력해 주세요"),
+            classroom = request.classroom ?: throw Exception("classroom 입력해 주세요"),
+            name = request.name ?: throw Exception("name 입력해 주세요"),
+            gender = request.gender ?: throw Exception("gender 입력해 주세요"),
+        )
+        return studentRepository.createStudent(newStudent)
     }
 
     override fun update(id: Int, request: StudentRequest): StudentEntity? {
         val willUpdate = this.findById(id) ?: throw Exception("해당 학생(id:${id})이 존재하지 않음")
         val updated = willUpdate.copy(
-            grade = request.grade,
-            classroom = request.classroom,
-            name = request.name,
-            gender = request.gender
+            grade = request.grade ?: willUpdate.grade,
+            classroom = request.classroom ?: willUpdate.classroom,
+            name = request.name ?: willUpdate.name,
+            gender = request.gender ?: willUpdate.gender
         )
         return studentRepository.updateStudent(updated)
     }
@@ -33,7 +39,7 @@ class StudentServiceImpl @Autowired constructor(
 
     override fun delete(id: Int): StudentEntity? {
         val willDelete = findById(id) ?: throw Exception("해당 학생(id:${id})이 존재하지 않음")
-        studentRepository.deleteStudent(willDelete.id!!)
+        studentRepository.deleteStudent(willDelete.id)
         return willDelete
     }
 

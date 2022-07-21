@@ -7,22 +7,22 @@ import org.springframework.stereotype.Repository
 @Repository
 class MockStudentRepository : StudentRepository {
     val students = mutableListOf<StudentEntity>()
+
     override fun createStudent(student: StudentEntity): StudentEntity? {
-        student.id = students.size
         try {
             students.add(student)
-            return this.findById(student.id!!)
+            return this.findById(student.id)
         } catch (ex: Exception) {
             throw Exception(ex.message)
         }
     }
 
     override fun updateStudent(student: StudentEntity): StudentEntity? {
-        val willUpdateStudent = this.findById(student.id!!)
+        val willUpdateStudent = this.findById(student.id)
         try {
             students.remove(willUpdateStudent)
             students.add(student)
-            return this.findById(student.id!!)
+            return this.findById(student.id)
         } catch (ex: Exception) {
             throw Exception(ex.message)
         }
