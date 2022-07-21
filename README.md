@@ -6,3 +6,4 @@
 * Spring Boot 2.7.1
 * Spring Web
 * Spring Boot DevTools
+* Swagger
