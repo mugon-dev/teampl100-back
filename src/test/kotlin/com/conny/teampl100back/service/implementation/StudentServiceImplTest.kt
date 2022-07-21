@@ -1,5 +1,6 @@
 package com.conny.teampl100back.service.implementation
 
+import com.conny.teampl100back.exception.NullArgumentException
 import com.conny.teampl100back.model.request.StudentRequest
 import com.conny.teampl100back.repository.StudentRepository
 import io.mockk.mockk
@@ -39,8 +40,7 @@ internal class StudentServiceImplTest {
             gender = "남"
         )
         // when
-
-        val exception = assertThrows<Exception> {
+        val exception = assertThrows<NullArgumentException> {
             studentService.create(request)
         }
         //then
