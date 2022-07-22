@@ -43,4 +43,8 @@ class MockStudentRepository : StudentRepository {
     override fun existsByName(name: String): Boolean {
         return students.any { it.name == name }
     }
+
+    override fun existsById(id: Int): Boolean {
+        return students.any { it.id == id }
+    }
 }

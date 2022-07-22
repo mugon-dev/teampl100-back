@@ -9,4 +9,5 @@ interface StudentRepository {
     fun findAll(): Collection<StudentEntity>?
     fun findById(studentId: Int): StudentEntity?
     fun existsByName(name: String): Boolean
+    fun existsById(id: Int): Boolean
 }

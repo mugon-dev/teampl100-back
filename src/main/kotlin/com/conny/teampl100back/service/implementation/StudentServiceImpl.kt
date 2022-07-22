@@ -22,9 +22,9 @@ class StudentServiceImpl @Autowired constructor(
             name = request.name ?: throw NullArgumentException("name 입력해 주세요"),
             gender = request.gender ?: throw NullArgumentException("gender 입력해 주세요"),
         )
-        
-        if (existsByName(request.name!!)) throw AlreadyExistsException("이미 존재하는 이름입니다.")
 
+        if (existsByName(request.name!!)) throw AlreadyExistsException("이미 존재하는 이름입니다.")
+        if (existsById(request.id!!)) throw AlreadyExistsException("이미 존재하는 ID입니다.")
         return studentRepository.createStudent(newStudent)
     }
 
@@ -53,7 +53,11 @@ class StudentServiceImpl @Autowired constructor(
         return studentRepository.findAll() ?: listOf()
     }
 
-    private fun existsByName(name: String): Boolean {
+    override fun existsByName(name: String): Boolean {
         return studentRepository.existsByName(name)
+    }
+
+    override fun existsById(id: Int): Boolean {
+        return studentRepository.existsById(id)
     }
 }

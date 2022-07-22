@@ -14,4 +14,7 @@ interface StudentService {
     fun delete(id: Int): StudentEntity?
 
     fun findAll(): Collection<StudentEntity>
+
+    fun existsByName(name: String): Boolean
+    fun existsById(id: Int): Boolean
 }

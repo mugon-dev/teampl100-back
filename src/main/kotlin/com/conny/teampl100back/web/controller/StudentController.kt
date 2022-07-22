@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*
 class StudentController @Autowired constructor(
     private val studentService: StudentService
 ) {
-    @Operation(summary = "get students", description = "모든 학생 정보 가져오기")
+    @Operation(summary = "get all students", description = "모든 학생 정보 가져오기")
     @ApiResponses(
         ApiResponse(
             responseCode = "200",
@@ -44,7 +44,32 @@ class StudentController @Autowired constructor(
         return BodyResponse.success(data, "Find all Student successful")
     }
 
+    @Operation(summary = "find one students", description = "학생ID로 정보 찾기")
+    @ApiResponses(
+        ApiResponse(
+            responseCode = "200",
+            content = [Content(
+                mediaType = "application/json",
+                schema = Schema(implementation = StudentResponse::class)
+            )]
+        )
+    )
+    @GetMapping("{id}")
+    fun findOneStudent(@PathVariable id: Int): ResponseEntity<Any> {
+        val data = studentService.findById(id)
+        return BodyResponse.success(StudentResponse.toEntity(data), "Find student successful")
+    }
+
     @Operation(summary = "post students", description = "학생 정보 등록하기")
+    @ApiResponses(
+        ApiResponse(
+            responseCode = "200",
+            content = [Content(
+                mediaType = "application/json",
+                schema = Schema(implementation = StudentResponse::class)
+            )]
+        )
+    )
     @PostMapping
     fun createStudent(@RequestBody request: StudentRequest): ResponseEntity<Any> {
         val data = studentService.create(request)
@@ -52,6 +77,15 @@ class StudentController @Autowired constructor(
     }
 
     @Operation(summary = "update students", description = "학생 정보 수정")
+    @ApiResponses(
+        ApiResponse(
+            responseCode = "200",
+            content = [Content(
+                mediaType = "application/json",
+                schema = Schema(implementation = StudentResponse::class)
+            )]
+        )
+    )
     @PutMapping("{id}")
     fun updateStudent(@PathVariable id: Int, @RequestBody request: StudentRequest): ResponseEntity<Any> {
         val data = studentService.update(id, request)
@@ -59,6 +93,15 @@ class StudentController @Autowired constructor(
     }
 
     @Operation(summary = "delete students", description = "학생 정보 삭제하기")
+    @ApiResponses(
+        ApiResponse(
+            responseCode = "200",
+            content = [Content(
+                mediaType = "application/json",
+                schema = Schema(implementation = StudentResponse::class)
+            )]
+        )
+    )
     @DeleteMapping("{id}")
     fun deleteStudent(@PathVariable id: Int): ResponseEntity<Any> {
         val data = studentService.delete(id)
