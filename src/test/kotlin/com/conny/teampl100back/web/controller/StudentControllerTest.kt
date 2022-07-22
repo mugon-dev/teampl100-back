@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.*
 
+
 @SpringBootTest
 @AutoConfigureMockMvc
 internal class StudentControllerTest @Autowired constructor(
@@ -26,8 +27,10 @@ internal class StudentControllerTest @Autowired constructor(
     @Nested
     @DisplayName("POST /api/v1/student")
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
     inner class CreateStudent {
 
+        @Order(1)
         @Test
         fun `should add new student`() {
             // given
@@ -54,8 +57,12 @@ internal class StudentControllerTest @Autowired constructor(
                         )
                     }
                 }
+            mockMvc.delete("$baseUrl/1") {
+                contentType = MediaType.APPLICATION_JSON
+            }
         }
 
+        @Order(2)
         @Test
         fun `should return AlreadyExistsException by name`() {
             // given
@@ -91,6 +98,7 @@ internal class StudentControllerTest @Autowired constructor(
 
         }
 
+        @Order(3)
         @Test
         fun `should return AlreadyExistsException by id`() {
             // given
@@ -130,6 +138,7 @@ internal class StudentControllerTest @Autowired constructor(
     @Nested
     @DisplayName("GET /api/v1/student")
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
     inner class GetStudent {
 
         @BeforeEach
@@ -146,6 +155,7 @@ internal class StudentControllerTest @Autowired constructor(
             }
         }
 
+        @Order(1)
         @Test
         fun `should get student list `() {
             // given
@@ -163,6 +173,7 @@ internal class StudentControllerTest @Autowired constructor(
                 }
         }
 
+        @Order(2)
         @Test
         fun `should find student by id`() {
             // given
@@ -180,6 +191,7 @@ internal class StudentControllerTest @Autowired constructor(
                 }
         }
 
+        @Order(3)
         @Test
         fun `should find student by id return NOT FOUND Exception`() {
             // given
@@ -212,6 +224,7 @@ internal class StudentControllerTest @Autowired constructor(
     @Nested
     @DisplayName("PUT /api/v1/student")
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
     inner class UpdateStudent {
 
         @BeforeEach
@@ -223,6 +236,7 @@ internal class StudentControllerTest @Autowired constructor(
             }
         }
 
+        @Order(1)
         @Test
         fun `should update student`() {
             // given
@@ -249,8 +263,20 @@ internal class StudentControllerTest @Autowired constructor(
                         )
                     }
                 }
+            mockMvc.put("$baseUrl/1") {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(
+                    StudentRequest(
+                        grade = 1,
+                        classroom = 1,
+                        name = "홍길동",
+                        gender = "남"
+                    )
+                )
+            }
         }
 
+        @Order(2)
         @Test
         fun `should update student return not found`() {
             // given
@@ -284,6 +310,7 @@ internal class StudentControllerTest @Autowired constructor(
     @Nested
     @DisplayName("DELETE /api/v1/student")
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
     inner class DeleteStudent {
         @BeforeEach
         fun `setting data`() {
@@ -299,6 +326,7 @@ internal class StudentControllerTest @Autowired constructor(
             }
         }
 
+        @Order(1)
         @Test
         fun `should delete student`() {
             // given
@@ -334,6 +362,7 @@ internal class StudentControllerTest @Autowired constructor(
                 }
         }
 
+        @Order(2)
         @Test
         fun `should delete student return Not Found`() {
             // given
