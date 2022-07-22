@@ -28,7 +28,7 @@ data class BodyResponse(
             return ResponseEntity.status(HttpStatus.OK).body(responseObject)
         }
 
-        fun success(data: Any, message: String? = null): ResponseEntity<Any> {
+        fun success(data: Any?, message: String? = null): ResponseEntity<Any> {
             val status = ResponseStatusObject(
                 message, 200
             )

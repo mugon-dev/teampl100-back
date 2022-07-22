@@ -40,4 +40,7 @@ class MockStudentRepository : StudentRepository {
     override fun findAll(): Collection<StudentEntity> = this.students
 
     override fun findById(studentId: Int): StudentEntity? = students.firstOrNull { it.id == studentId }
+    override fun existsByName(name: String): Boolean {
+        return students.any { it.name == name }
+    }
 }

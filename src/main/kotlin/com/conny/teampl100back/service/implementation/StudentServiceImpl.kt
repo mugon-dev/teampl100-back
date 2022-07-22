@@ -1,5 +1,6 @@
 package com.conny.teampl100back.service.implementation
 
+import com.conny.teampl100back.exception.AlreadyExistsException
 import com.conny.teampl100back.exception.NotFoundException
 import com.conny.teampl100back.exception.NullArgumentException
 import com.conny.teampl100back.model.entity.StudentEntity
@@ -21,6 +22,9 @@ class StudentServiceImpl @Autowired constructor(
             name = request.name ?: throw NullArgumentException("name 입력해 주세요"),
             gender = request.gender ?: throw NullArgumentException("gender 입력해 주세요"),
         )
+        
+        if (existsByName(request.name!!)) throw AlreadyExistsException("이미 존재하는 이름입니다.")
+
         return studentRepository.createStudent(newStudent)
     }
 
@@ -47,5 +51,9 @@ class StudentServiceImpl @Autowired constructor(
 
     override fun findAll(): Collection<StudentEntity> {
         return studentRepository.findAll() ?: listOf()
+    }
+
+    private fun existsByName(name: String): Boolean {
+        return studentRepository.existsByName(name)
     }
 }

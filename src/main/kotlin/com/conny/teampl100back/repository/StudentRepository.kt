@@ -8,4 +8,5 @@ interface StudentRepository {
     fun deleteStudent(studentId: Int)
     fun findAll(): Collection<StudentEntity>?
     fun findById(studentId: Int): StudentEntity?
+    fun existsByName(name: String): Boolean
 }
