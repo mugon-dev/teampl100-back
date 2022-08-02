@@ -47,14 +47,14 @@ jib {
     from {
         image = "adoptopenjdk/openjdk11:alpine-jre"
     }
-    to {
-        image = "mugon/${project.name}-${project.version.toString().toLowerCase()}"
-        tags = setOf("1.0")
-    }
+//    to {
+//        image = "mugon/${project.name}-${project.version.toString().toLowerCase()}"
+//        tags = setOf("1.0")
+//    }
     container {
-        entrypoint =
-            listOf("java", "-jar", "teampl100-back-0.0.1-SNAPSHOT.jar")
-        // mainClass = "com.test.StartApplication"
+//        entrypoint =
+//            listOf("java", "-jar", "teampl100-back-0.0.1-SNAPSHOT.jar")
+        mainClass = "com.conny.teampl100back.Teampl100BackApplication"
         jvmFlags = listOf(
             "-Xms512m",
             "-Xmx512m",
