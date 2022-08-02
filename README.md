@@ -33,6 +33,6 @@ http://localhost:8080/api-doc
 
 ### 에러체크
 
-1. 생성시 없은 인자
-2. 생성시 이미 존재하는 id, name
-3. 업데이트 , 삭제시 없는 id
+1. 학생 생성시 없는 인자 -> NullArgumentException
+2. 학생 생성시 이미 존재하는 id, name -> AlreadyExistsException
+3. 업데이트 , 삭제시 없는 id -> NotFoundException
